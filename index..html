@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Vanessa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* Page Layouts */
+        .page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+        .page.active { display: flex; }
+
+        /* Background Images for specific pages */
+        .page1 { background-image: url('IMG_2745.jpg'); }
+        .page2 { background-image: url('IMG_2741.jpg'); }
+        .page3 { background-image: url('IMG_2711.jpg'); }
+        .page5 { background-image: url('IMG_2704.jpg'); }
+        
+        /* Pink gradient for the proposal page */
+        .page4 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); }
+
+        /* Glassmorphism Text Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d6336c;
+            font-size: 2.5rem;
+            margin-top: 0;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        .next-btn, .start-btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            background: #d6336c;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(214, 51, 108, 0.4);
+            transition: transform 0.2s;
+        }
+        .next-btn:hover, .start-btn:hover { transform: scale(1.05); }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        #yesBtn {
+            background: #d6336c;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(214, 51, 108, 0.4);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        #noBtn {
+            background: #e0e0e0;
+            color: #666;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: left 0.3s, top 0.3s;
+        }
+
+        /* Heart Explosion Effect */
+        .explosion-heart {
+            position: fixed;
+            color: #ff4d6d;
+            pointer-events: none;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5); opacity: 0; }
+        }
+
+        /* Floating Hearts for Page 4 */
+        .bg-heart {
+            position: absolute;
+            bottom: -50px;
+            color: #ff4d6d;
+            opacity: 0.5;
+            font-size: 24px;
+            animation: floatUp linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Music Toggle */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="a_good_night.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-toggle" id="musicBtn" title="Toggle Music">🎵</button>
+
+    <!-- START SCREEN -->
+    <div class="page start-screen active">
+        <div class="card">
+            <h1>For Vanessa...</h1>
+            <p style="text-align: center;">I made this little journey just for you.</p>
+            <button class="start-btn" id="startBtn">Open Message 💌</button>
+        </div>
+    </div>
+
+    <!-- PAGE 1 -->
+    <div class="page page1">
+        <div class="card">
+            <p>Who could have ever known that spending time with you would turn out to be so fantastic? From the moment I laid my eyes on you, I've known you're a very special person. But I never could have imagined the feeling I would have for you.</p>
+            <button class="next-btn" onclick="showPage('page2')">Next ➔</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page page2">
+        <div class="card">
+            <p>You've brought back the spark for love in my life for the first time in a long time. I want forever with someone again, and forever is a long time and it's not certain, but with you, I want to do forever.</p>
+            <button class="next-btn" onclick="showPage('page3')">Next ➔</button>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page page3">
+        <div class="card">
+            <p>Well, by now you've figured out what I wanna ask you. But before that, I just want to let you know why I want you to be my girlfriend. <br><br>You're kind to me and I love that. You're funny and have the most beautiful smile ever; whenever you smile, I just wanna smile too. You've got these eyes that look at me and make me feel special, your eyes are so beautiful. <br><br>Don't forget your banging body, wow, don't get me started on that topic, but just know 'wow' is an understatement. <br><br>Hope my feelings for you get through to you and you make the right decision for you.</p>
+            <button class="next-btn" onclick="showPage('page4')">Next ➔</button>
+        </div>
+    </div>
+
+    <!-- PAGE 4: THE PROPOSAL -->
+    <div class="page page4">
+        <!-- Floating hearts generated by JS -->
+        <div class="card">
+            <h1>Vanessa...</h1>
+            <p style="text-align: center; font-size: 1.3rem; font-weight: 600;">Will you be my girlfriend?</p>
+            <div class="btn-container">
+                <button id="yesBtn">Yes! 💖</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 5: FINAL PAGE -->
+    <div class="page page5">
+        <div class="card">
+            <h1 style="font-size: 3rem;">I'm the luckiest man alive ❤️</h1>
+        </div>
+    </div>
+
+    <script>
+        // 1. Audio Controls
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicBtn.innerHTML = '🔊';
+            }).catch(e => console.log("Audio play failed"));
+            
+            document.querySelector('.start-screen').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+        });
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '🔇';
+                isPlaying = false;
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '🔊';
+                isPlaying = true;
+            }
+        });
+
+        // 2. Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // 3. Generate Floating Hearts for Page 4
+        const page4 = document.querySelector('.page4');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            heart.style.animationDelay = Math.random() * 10 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            page4.appendChild(heart);
+        }
+
+        // 4. The "No" Button Runs Away
+        const noBtn = document.getElementById('noBtn');
+        function moveNoButton() {
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
+        }
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // 5. The "Yes" Button Explodes & Goes to Final Page
+        const yesBtn = document.getElementById('yesBtn');
+        yesBtn.addEventListener('click', () => {
+            // Massive Heart Explosion
+            for (let i = 0; i < 150; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('explosion-heart');
+                heart.innerHTML = '❤';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                
+                const angle = Math.random() * 360;
+                const distance = Math.random() * 600 + 200;
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
+                
+                heart.style.setProperty('--x', x + 'px');
+                heart.style.setProperty('--y', y + 'px');
+                heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                heart.style.animationDuration = (Math.random() * 1 + 1) + 's';
+                
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+            }
+            
+            // Transition to final page
+            setTimeout(() => {
+                document.getElementById('page4').classList.remove('active');
+                document.getElementById('page5').classList.add('active');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
